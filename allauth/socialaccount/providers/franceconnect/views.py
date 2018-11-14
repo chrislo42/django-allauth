@@ -25,8 +25,6 @@ class FranceConnectOAuth2Adapter(OAuth2Adapter):
                             })
         request.session['id_token'] = token.token
         request.session['state'] = request.GET['state']
-        print(request.session['id_token'])
-        print(request.session['state'])
         resp.raise_for_status()
         extra_data = resp.json()
         login = self.get_provider().sociallogin_from_response(request, extra_data)
