@@ -9,7 +9,7 @@ from ..account import app_settings as account_settings
 from ..account.adapter import get_adapter as get_account_adapter
 from ..account.app_settings import EmailVerificationMethod
 from ..account.models import EmailAddress
-from ..account.utils import user_email, user_field, user_username
+from ..account.utils import user_email, user_field, user_username, complete_signup
 from ..utils import (
     deserialize_instance,
     email_address_exists,
@@ -45,6 +45,16 @@ class DefaultSocialAccountAdapter(object):
         handlers may be active and are executed in undetermined order.
         """
         pass
+
+    def pre_complete_signup(self, request, user, email_verification, success_url, signal_kwargs=None):
+        """
+        Allow to modify the normal signup flow
+        """
+        return complete_signup(request,
+                               user,
+                               email_verification,
+                               success_url,
+                               signal_kwargs)
 
     def authentication_error(self,
                              request,

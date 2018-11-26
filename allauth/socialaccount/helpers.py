@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from allauth.account import app_settings as account_settings
 from allauth.account.adapter import get_adapter as get_account_adapter
-from allauth.account.utils import complete_signup, perform_login, user_username
+from allauth.account.utils import perform_login, user_username
 from allauth.exceptions import ImmediateHttpResponse
 
 from . import app_settings, signals
@@ -177,11 +177,11 @@ def _complete_social_login(request, sociallogin):
 
 
 def complete_social_signup(request, sociallogin):
-    return complete_signup(request,
-                           sociallogin.user,
-                           app_settings.EMAIL_VERIFICATION,
-                           sociallogin.get_redirect_url(request),
-                           signal_kwargs={'sociallogin': sociallogin})
+    return get_adapter().pre_complete_signup(request,
+                                             sociallogin.user,
+                                             app_settings.EMAIL_VERIFICATION,
+                                             sociallogin.get_redirect_url(request),
+                                             signal_kwargs={'sociallogin': sociallogin})
 
 
 # TODO: Factor out callable importing functionality
