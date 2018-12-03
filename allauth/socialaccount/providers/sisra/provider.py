@@ -41,7 +41,7 @@ class SisraProvider(OAuth2Provider):
         return ret
 
     def extract_uid(self, data):
-        return str(data['sub'])
+        return str(data['portailId'])
 
     def extract_common_fields(self, data):
         return dict(email=data.get('email'),

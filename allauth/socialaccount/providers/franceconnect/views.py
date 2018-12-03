@@ -43,5 +43,15 @@ class FranceConnectLogoutView(View):
         }
         return redirect(self.logout_url + '?' + urlencode(data))
 
+    def post(self, request):
+        token = request.POST.get('token')
+        state = request.POST.get('state')
+        data = {
+            'id_token_hint': token,
+            'state': state,
+            'post_logout_redirect_uri': request.build_absolute_uri('/accounts/logout/'),
+        }
+        return redirect(self.logout_url + '?' + urlencode(data))
+
 oauth2_login = OAuth2LoginView.adapter_view(FranceConnectOAuth2Adapter)
 oauth2_callback = OAuth2CallbackView.adapter_view(FranceConnectOAuth2Adapter)
