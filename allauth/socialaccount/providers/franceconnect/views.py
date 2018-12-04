@@ -23,12 +23,18 @@ class FranceConnectOAuth2Adapter(OAuth2Adapter):
                             params={'schema': 'openid',},
                             headers={'Authorization': 'Bearer %s' % token.token
                             })
-        request.session['id_token'] = token.token
+        request.session['id_token'] = token.token_secret
         request.session['state'] = request.GET['state']
         resp.raise_for_status()
         extra_data = resp.json()
         login = self.get_provider().sociallogin_from_response(request, extra_data)
         return login
+
+    def parse_token(self, data):
+        token = super().parse_token(data)
+        # pas de refresh_token, utilisation de token_secret pour stocker le id_token en vue du logout
+        token.token_secret = data.get('id_token', '')
+        return token
 
 
 class FranceConnectLogoutView(View):
