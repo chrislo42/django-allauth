@@ -48,7 +48,8 @@ class DefaultSocialAccountAdapter(object):
 
     def pre_complete_signup(self, request, user, email_verification, success_url, signal_kwargs=None):
         """
-        Allow to modify the normal signup flow
+        Allow to modify the normal signup flow in the custom adapter
+        Mainly to avoid login because user is not save yet
         """
         return complete_signup(request,
                                user,

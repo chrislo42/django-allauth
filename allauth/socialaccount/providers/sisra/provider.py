@@ -1,3 +1,4 @@
+from django.utils.crypto import get_random_string
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.app_settings import QUERY_EMAIL
 from allauth.socialaccount.providers.base import AuthAction, ProviderAccount
@@ -35,7 +36,8 @@ class SisraProvider(OAuth2Provider):
 
     def get_auth_params(self, request, action):
         ret = super(SisraProvider, self).get_auth_params(request, action)
-        ret['nonce'] = 'UneChaineArbitaire'
+        ret['nonce'] = get_random_string()
+        request.session['socialaccount_nonce'] = ret['nonce']
         if action == AuthAction.REAUTHENTICATE:
             ret['prompt'] = 'select_account consent'
         return ret
