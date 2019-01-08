@@ -25,7 +25,7 @@ class ManifSportOAuth2Adapter(OAuth2Adapter):
     def complete_login(self, request, app, token, **kwargs):
         token_part = token.token_secret.split('.')
         data_token = ast.literal_eval(base64.urlsafe_b64decode(token_part[1] + "===").decode("utf-8"))
-        if data_token['nonce'] != request.session['socialaccount_nonce']:
+        if 'socialaccount_nonce' in request.session and data_token['nonce'] != request.session['socialaccount_nonce']:
             raise OAuth2Error
             return
         resp = requests.get(self.profile_url,
