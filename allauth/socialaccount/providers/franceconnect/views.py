@@ -26,7 +26,7 @@ class FranceConnectOAuth2Adapter(OAuth2Adapter):
         # Décodage avec extra caractères pour enlever les erreurs de padding et transformation de bit en chaine puis en dict
         token_part = token.token_secret.split('.')
         data_token = ast.literal_eval(base64.urlsafe_b64decode(token_part[1] + "===").decode("utf-8"))
-        if data_token['nonce'] != request.session['socialaccount_nonce']:
+        if 'socialaccount_nonce' in request.session and data_token['nonce'] != request.session['socialaccount_nonce']:
             raise OAuth2Error
             return
 
