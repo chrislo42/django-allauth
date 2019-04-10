@@ -6,8 +6,9 @@ from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
 
 
 class Scope(object):
-    # EMAIL = 'email'
-    # PROFILE = 'profile'
+    EMAIL = 'email'
+    PROFILE = 'profile'
+    OPENID = 'openid'
     pass
 
 
@@ -29,7 +30,7 @@ class SisraProvider(OAuth2Provider):
     account_class = SisraAccount
 
     def get_default_scope(self):
-        scope = [Scope.PROFILE]
+        scope = [Scope.OPENID]
         if QUERY_EMAIL:
             scope.append(Scope.EMAIL)
         return scope
