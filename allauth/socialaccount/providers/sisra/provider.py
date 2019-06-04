@@ -47,9 +47,16 @@ class SisraProvider(OAuth2Provider):
         return str(data['portailId'])
 
     def extract_common_fields(self, data):
+
+        phone = data.get('phone_number')
+        if phone and phone[0] == '0':
+            phone = "+33" + phone[1:]
+
         return dict(email=data.get('email'),
                     last_name=data.get('family_name'),
-                    first_name=data.get('given_name'))
+                    first_name=data.get('given_name'),
+                    username=data.get('login'),
+                    phone=phone)
 
     def extract_email_addresses(self, data):
         ret = []
