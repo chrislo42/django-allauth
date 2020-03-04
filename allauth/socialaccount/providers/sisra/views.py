@@ -18,12 +18,6 @@ from .provider import SisraProvider
 
 class SisraOAuth2Adapter(OAuth2Adapter):
     provider_id = SisraProvider.id
-    # access_token_url = 'https://recette.sante-ra.fr/AutoConnectSSO/idserver/connect/token'
-    # authorize_url = 'https://recette.sante-ra.fr/AutoConnectSSO/idserver/connect/authorize'
-    # profile_url = 'https://recette.sante-ra.fr/AutoConnectSSO/idserver/connect/userinfo'
-    access_token_url = 'https://www.sante-ra.fr/AutoConnectSSO/idserver/connect/token'
-    authorize_url = 'https://www.sante-ra.fr/AutoConnectSSO/idserver/connect/authorize'
-    profile_url = 'https://www.sante-ra.fr/AutoConnectSSO/idserver/connect/userinfo'
 
     def __init__(self, *args, **kwargs):
         mode = ''
@@ -34,10 +28,10 @@ class SisraOAuth2Adapter(OAuth2Adapter):
                 self.access_token_url = 'https://www.sante-ra.fr/AutoConnectSSO/idserver/connect/token'
                 self.authorize_url = 'https://www.sante-ra.fr/AutoConnectSSO/idserver/connect/authorize'
                 self.profile_url = 'https://www.sante-ra.fr/AutoConnectSSO/idserver/connect/userinfo'
-                else:
-                    self.access_token_url = 'https://recette.sante-ra.fr/AutoConnectSSO/idserver/connect/token'
-                    self.authorize_url = 'https://recette.sante-ra.fr/AutoConnectSSO/idserver/connect/authorize'
-                    self.profile_url = 'https://recette.sante-ra.fr/AutoConnectSSO/idserver/connect/userinfo'
+            else:
+                self.access_token_url = 'https://recette.sante-ra.fr/AutoConnectSSO/idserver/connect/token'
+                self.authorize_url = 'https://recette.sante-ra.fr/AutoConnectSSO/idserver/connect/authorize'
+                self.profile_url = 'https://recette.sante-ra.fr/AutoConnectSSO/idserver/connect/userinfo'
         super().__init__(*args, **kwargs)
         
     def complete_login(self, request, app, token, **kwargs):
